@@ -108,11 +108,57 @@ void create_path(char* input_path, char* output_path)
     create_file_path(output_filename, output_path);
 }
 
+
 void selection_sort_file(const char* input_filename, const char* output_filename, char order)
 {
+    int count;
+    int* numbers = read_numbers_from_file(input_filename, &count);
+    if (numbers == NULL)
+    {
+        return;
+    }
+    //Данный блок кода сортирует массив методом выбора в прямом или обратном порядке в зависимости от выбора пользователя
+    clock_t start_time = clock();
+    for (int i = 0; i < count - 1; i++)
+    {
+        int min_index = i;
+        if (order)
+        {
+            for (int j = i + 1; j < count; j++)
+            {
+                if (numbers[j] > numbers[min_index])
+                {
+                    min_index = j;
+                }
+            }
+        }
+        else
+        {
+            for (int j = i + 1; j < count; j++)
+            {
+                if (numbers[j] < numbers[min_index])
+                {
+                    min_index = j;
+                }
+            }
+        }
+        if (min_index != i)
+        {
+            int temp = numbers[i];
+            numbers[i] = numbers[min_index];
+            numbers[min_index] = temp;
+        }
+    }
+    clock_t end_time = clock();
+    double time_spent = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+    system("clear");
+    //Выводим время за которое был отсортирован массив
+    printf("Время сортировки: %.3f секунд\n", time_spent);
+    //Записываем отсортированный массив в файл
+    write_file(output_filename, numbers, count);
+    free(numbers);
     pause_linux();
-    // TODO selection sort
-
+    system("clear");
 }
 
 void display_menu()
@@ -126,8 +172,22 @@ void display_menu()
 
 void sort_by_order(const char* input_path, const char* output_path)
 {
-    pause_linux();
-    // TODO choice order
+    int ch;
+    system("clear");
+    //Предагаем пользователю в каком порядке нужно отсортировать массив
+    printf("1. Обычный порядок\n2. Обратный порядок\nВыберите порядок сортировки: ");
+    scanf("%d", &ch);
+    switch (ch)
+    {
+    case 1:
+        //Сортировка по возрастанию
+        selection_sort_file(input_path, output_path, NORMAL);
+        break;
+    case 2:
+        //Сортировка по убыванию
+        selection_sort_file(input_path, output_path, REVERSE);
+        break;
+    }
 }
 
 void handle_menu_choice(int choice)
@@ -166,3 +226,4 @@ void handle_menu_choice(int choice)
         break;
     }
 }
+s
