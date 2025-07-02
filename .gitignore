@@ -1,0 +1,35 @@
+# CMake generated files
+build/
+bin/
+lib/
+*.cmake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+CTestTestfile.cmake
+*.dir/
+*.o
+*.obj
+*.so
+*.a
+*.dll
+*.exe
+# Visual Studio specific files (if using VS with CMake)
+.vs/
+*.VC.db
+*.VC.opendb
+*.VC.VC.opendb
+*.VC.VC.db
+ipch/
+# CLion specific files (if using CLion with CMake)
+.idea/
+cmake-build-*/
+# Other common build artifacts
+*.log
+*.swp
+*.bak
+# Dependency management (e.g., Conan)
+conan_build/
+conan_install/
+conan_cache/
